@@ -37,7 +37,6 @@ func main() {
 			return
 		case "echo":
 			fmt.Println(commandArguments)
-			continue
 		default:
 			fmt.Printf("%v: command not found", command)
 
