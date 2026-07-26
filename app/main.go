@@ -17,5 +17,5 @@ func main() {
 		log.Fatal("xx")
 	}
 
-	fmt.Printf("{%v}: command not found",command)
+	fmt.Printf("%v: command not found",command)
 }
