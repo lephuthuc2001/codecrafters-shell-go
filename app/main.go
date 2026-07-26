@@ -27,6 +27,15 @@ func isBuiltInCommand(command string) bool {
 	return slices.Contains(builtInCommand, command)
 }
 
+func handleCommandType(command string) {
+	if isBuiltInCommand(command) {
+		fmt.Printf("%v is a shell builtin", command)
+	} else {
+		fmt.Printf("%v: not found", command)
+	}
+	fmt.Print("\n")
+}
+
 func main() {
 	reader := bufio.NewReader(os.Stdin)
 
@@ -43,20 +52,13 @@ func main() {
 		command, commandArguments := splitCommandInput(str)
 
 		switch command {
+
 		case "exit":
 			return
 		case "echo":
 			fmt.Println(strings.Join(commandArguments, " "))
 		case "type":
-			typeCheckCommand := commandArguments[0]
-
-			if isBuiltInCommand(typeCheckCommand) {
-				fmt.Printf("%v is a shell builtin", typeCheckCommand)
-			} else {
-				fmt.Printf("%v: not found", typeCheckCommand)
-			}
-			fmt.Print("\n")
-
+			handleCommandType(commandArguments[0])
 		default:
 			fmt.Printf("%v: command not found", command)
 			fmt.Print("\n")
