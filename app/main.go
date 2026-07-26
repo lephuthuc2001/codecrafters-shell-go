@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -17,5 +18,6 @@ func main() {
 		log.Fatal("xx")
 	}
 
-	fmt.Printf("%v: command not found",command)
+	
+	fmt.Printf("%v: command not found",strings.Trim(command,"\n"))
 }
