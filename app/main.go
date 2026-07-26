@@ -12,7 +12,7 @@ func main() {
 	fmt.Print("$ ")
 
 	reader :=  bufio.NewReader(os.Stdin)
-	command, error := reader.ReadString("\n"[0]);
+	command, error := reader.ReadString('\n');
 
 	if error != nil {
 		log.Fatal("xx")
