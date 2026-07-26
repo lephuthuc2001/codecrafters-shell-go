@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	fmt.Print("$ ")
+	fmt.Print("$ ") 
 
 	reader :=  bufio.NewReader(os.Stdin)
 	command, error := reader.ReadString('\n');
@@ -18,6 +18,5 @@ func main() {
 		log.Fatal("xx")
 	}
 
-	
 	fmt.Printf("%v: command not found",strings.Trim(command,"\n"))
 }
