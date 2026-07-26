@@ -53,7 +53,7 @@ func main() {
 			if isBuiltInCommand(typeCheckCommand) {
 				fmt.Printf("%v is a shell builtin", typeCheckCommand)
 			} else {
-				fmt.Printf("%v: command not found", typeCheckCommand)
+				fmt.Printf("%v: not found", typeCheckCommand)
 			}
 			fmt.Print("\n")
 
