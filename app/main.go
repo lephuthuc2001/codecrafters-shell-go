@@ -7,13 +7,13 @@ import (
 	"strings"
 )
 
-func splitCommand(str string) (command string, commandArguments string) {
-	str = strings.Trim(str, "\n")
-	str = strings.TrimSpace(str)
+func splitCommandInput(input string) (command string, commandArguments string) {
+	input = strings.Trim(input, "\n")
+	input = strings.TrimSpace(input)
 
-	strFields := strings.Fields(str)
+	inputFields := strings.Fields(input)
 
-	return strFields[0], strings.Join(strFields[1:]," ")
+	return inputFields[0], strings.Join(inputFields[1:], " ")
 }
 
 func main() {
@@ -30,20 +30,18 @@ func main() {
 			os.Exit(1)
 		}
 
-		command, commandArguments  := splitCommand(str)
+		command, commandArguments := splitCommandInput(str)
 
-		if command == "exit"{
-			break
-		}
-
-		if command == "echo" {
+		switch command {
+		case "exit":
+			return
+		case "echo":
 			fmt.Println(commandArguments)
 			continue
+		default:
+			fmt.Printf("%v: command not found", command)
+
+			fmt.Print("\n")
 		}
-
-
-		fmt.Printf("%v: command not found", command)
-
-		fmt.Print("\n")
 	}
 }
