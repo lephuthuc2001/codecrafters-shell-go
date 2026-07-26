@@ -9,24 +9,26 @@ import (
 
 func main() {
 
-	var count int;
+	reader := bufio.NewReader(os.Stdin)
+
 	for {
-		if count == 0 {
-			fmt.Print("$ ") 
-		} else{
-			fmt.Print("\n$ ") 
+		fmt.Print("$ ")
+
+		command, error := reader.ReadString('\n')
+
+		if error != nil {
+			fmt.Fprintln(os.Stderr, "Error reading input:", error)
+			os.Exit(1)
 		}
 
-	reader :=  bufio.NewReader(os.Stdin)
-	command, error := reader.ReadString('\n');
+		trimmedCommand := strings.Trim(command, "\n")
 
-	if error != nil {
-		fmt.Fprintln(os.Stderr, "Error reading input:", error)
-		os.Exit(1)
-	}
+		if trimmedCommand == "exit"{
+			break
+		}
 
-	fmt.Printf("%v: command not found",strings.Trim(command,"\n"))
+		fmt.Printf("%v: command not found", trimmedCommand)
 
-	count ++
+		fmt.Print("\n")
 	}
 }
