@@ -21,13 +21,13 @@ func main() {
 			os.Exit(1)
 		}
 
-		trimmedCommand := strings.Trim(command, "\n")
+		command = strings.TrimSpace(strings.Trim(command, "\n"))
 
-		if trimmedCommand == "exit"{
+		if command == "exit"{
 			break
 		}
 
-		fmt.Printf("%v: command not found", trimmedCommand)
+		fmt.Printf("%v: command not found", command)
 
 		fmt.Print("\n")
 	}
