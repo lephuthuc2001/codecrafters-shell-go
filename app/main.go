@@ -28,12 +28,6 @@ func isBuiltInCommand(command string) bool {
 	return slices.Contains(builtInCommand, command)
 }
 
-// func hasExecutePermissions(fm fs.FileInfo) bool{
-// 	fmRunes := []rune(fm.Mode().String())
-
-// 	return fmRunes[9] == 'x'
-// }
-
 func handleCommandType(command string) {
 	if isBuiltInCommand(command) {
 		fmt.Printf("%v is a shell builtin", command)
@@ -46,7 +40,7 @@ func handleCommandType(command string) {
 			fmt.Printf("%v is %v", command, path)
 		}
 	}
-	
+
 	fmt.Print("\n")
 }
 
