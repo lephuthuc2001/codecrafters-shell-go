@@ -39,7 +39,14 @@ func isBuiltInCommand(command string) bool {
 // 	return path, isExternal
 // }
 
-func handleCommandType(command string) {
+func handleCommandType(commandTypeArguments []string) {
+	if len(commandTypeArguments) == 0 {
+		fmt.Println("type command missing arguments")
+		return
+	}
+
+	command := commandTypeArguments[0]
+
 	if isBuiltInCommand(command) {
 		fmt.Printf("%v is a shell builtin", command)
 	} else {
@@ -77,7 +84,7 @@ func main() {
 		case "echo":
 			fmt.Println(strings.Join(commandArguments, " "))
 		case "type":
-			handleCommandType(commandArguments[0])
+			handleCommandType(commandArguments)
 		default:
 			_, err := exec.LookPath(command)
 
