@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"os/exec"
 	"slices"
 	"strings"
 )
@@ -27,11 +28,23 @@ func isBuiltInCommand(command string) bool {
 	return slices.Contains(builtInCommand, command)
 }
 
+// func hasExecutePermissions(fm fs.FileInfo) bool{
+// 	fmRunes := []rune(fm.Mode().String())
+
+// 	return fmRunes[9] == 'x'
+// }
+
 func handleCommandType(command string) {
 	if isBuiltInCommand(command) {
 		fmt.Printf("%v is a shell builtin", command)
 	} else {
-		fmt.Printf("%v: not found", command)
+		path, err := exec.LookPath(command)
+
+		if err != nil {
+			fmt.Printf("%v: not found", err)
+		}
+
+		fmt.Printf("%v is %v", command, path)
 	}
 	fmt.Print("\n")
 }
