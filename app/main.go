@@ -41,7 +41,7 @@ func handleCommandType(command string) {
 		path, err := exec.LookPath(command)
 
 		if err != nil {
-			fmt.Printf("%v: not found", err)
+			fmt.Printf("%v: not found", command)
 		}
 
 		fmt.Printf("%v is %v", command, path)
