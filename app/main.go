@@ -42,10 +42,11 @@ func handleCommandType(command string) {
 
 		if err != nil {
 			fmt.Printf("%v: not found", command)
+		} else {
+			fmt.Printf("%v is %v", command, path)
 		}
-
-		fmt.Printf("%v is %v", command, path)
 	}
+	
 	fmt.Print("\n")
 }
 
