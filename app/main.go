@@ -28,6 +28,17 @@ func isBuiltInCommand(command string) bool {
 	return slices.Contains(builtInCommand, command)
 }
 
+// func isExternalCommand(command string )(commandPath string, isExternal bool) {
+// 	path, err := exec.LookPath(command)
+// 	isExternal = false
+
+// 	if err != nil {
+// 		isExternal = true
+// 	}
+
+// 	return path, isExternal
+// }
+
 func handleCommandType(command string) {
 	if isBuiltInCommand(command) {
 		fmt.Printf("%v is a shell builtin", command)
@@ -62,14 +73,22 @@ func main() {
 		switch command {
 
 		case "exit":
-			return
+			os.Exit(0)
 		case "echo":
 			fmt.Println(strings.Join(commandArguments, " "))
 		case "type":
 			handleCommandType(commandArguments[0])
 		default:
-			fmt.Printf("%v: command not found", command)
-			fmt.Print("\n")
+			_, err := exec.LookPath(command)
+
+			if err != nil {
+				fmt.Printf("%v: not found", command)
+				fmt.Print("\n")
+				continue
+			}
+
+			out, err := exec.Command(command, commandArguments...).Output()
+			fmt.Print(string(out))
 		}
 	}
 }
