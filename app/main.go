@@ -91,10 +91,11 @@ func main() {
 
 			if err != nil || !path.IsAbs(dirToGo) {
 				fmt.Fprintf(os.Stderr, "cd: %v: No such file or directory", dirToGo)
+				fmt.Println()
 			} else {
 				pwd = dirToGo 
 			}
-			
+
 		default:
 			_, err := exec.LookPath(command)
 
