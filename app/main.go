@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path"
 	"slices"
 	"strings"
 )
@@ -24,6 +25,7 @@ func isBuiltInCommand(command string) bool {
 		"echo",
 		"exit",
 		"pwd",
+		"cd",
 	}
 
 	return slices.Contains(builtInCommand, command)
@@ -53,6 +55,7 @@ func handleCommandType(commandTypeArguments []string) {
 
 func main() {
 	reader := bufio.NewReader(os.Stdin)
+	pwd, _:= os.Getwd();
 
 	for {
 		fmt.Print("$ ")
@@ -75,11 +78,23 @@ func main() {
 		case "type":
 			handleCommandType(commandArguments)
 		case "pwd":
-			pwd, err := os.Getwd();
-			if err != nil {
-				fmt.Fprintln(os.Stderr, "Error can't find current directory:", error)
-			}
 			fmt.Println(pwd)
+		case "cd":
+			// no argument => to home
+			if len(commandArguments) == 0{
+
+			}
+
+			dirToGo := commandArguments[0];
+			
+			_, err := os.ReadDir(dirToGo)
+
+			if err != nil || !path.IsAbs(dirToGo) {
+				fmt.Fprintf(os.Stderr, "cd: %v: No such file or directory", dirToGo)
+			} else {
+				pwd = dirToGo 
+			}
+			
 		default:
 			_, err := exec.LookPath(command)
 
