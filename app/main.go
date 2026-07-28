@@ -97,6 +97,16 @@ func main() {
 
 			dirToGo := commandArguments[0]
 
+			if dirToGo == "~" {
+				homePath, err := os.UserHomeDir()
+
+				if err != nil {
+					fmt.Fprintln(os.Stderr, "Error changing directory:", error)
+				}
+
+				os.Chdir(homePath)
+			}
+
 			_, err := os.Stat(dirToGo)
 
 			if err != nil {
