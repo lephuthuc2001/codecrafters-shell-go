@@ -86,12 +86,18 @@ func main() {
 			fmt.Println(pwd)
 		case "cd":
 			// no argument => to home
-			if len(commandArguments) == 0{
+			if len(commandArguments) == 0 {
+				homePath, err := os.UserHomeDir()
 
+				if err != nil  {
+					fmt.Fprintln(os.Stderr, "Error changing directory:", error)
+				}
+
+				os.Chdir(homePath)
 			}
 
-			dirToGo := commandArguments[0];
-			
+			dirToGo := commandArguments[0]
+
 			_, err := os.Stat(dirToGo)
 
 			if err != nil || !path.IsAbs(dirToGo) {
