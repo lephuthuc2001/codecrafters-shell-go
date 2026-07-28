@@ -100,7 +100,7 @@ func main() {
 
 			_, err := os.Stat(dirToGo)
 
-			if err != nil || !path.IsAbs(dirToGo) {
+			if err != nil {
 				fmt.Fprintf(os.Stderr, "cd: %v: No such file or directory", dirToGo)
 				fmt.Println()
 
