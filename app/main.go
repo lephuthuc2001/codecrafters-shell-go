@@ -73,6 +73,12 @@ func main() {
 			fmt.Println(strings.Join(commandArguments, " "))
 		case "type":
 			handleCommandType(commandArguments)
+		case "pwd":
+			pwd, err := os.Getwd();
+			if err != nil {
+				fmt.Fprintln(os.Stderr, "Error can't find current directory:", error)
+			}
+			fmt.Println(pwd)
 		default:
 			_, err := exec.LookPath(command)
 
