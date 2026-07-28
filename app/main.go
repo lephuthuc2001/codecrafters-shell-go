@@ -93,6 +93,7 @@ func main() {
 				}
 
 				os.Chdir(homePath)
+				continue
 			}
 
 			dirToGo := commandArguments[0]
@@ -105,6 +106,7 @@ func main() {
 				}
 
 				os.Chdir(homePath)
+				continue
 			}
 
 			_, err := os.Stat(dirToGo)
