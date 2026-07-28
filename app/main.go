@@ -23,6 +23,7 @@ func isBuiltInCommand(command string) bool {
 		"type",
 		"echo",
 		"exit",
+		"pwd",
 	}
 
 	return slices.Contains(builtInCommand, command)
