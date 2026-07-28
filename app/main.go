@@ -28,17 +28,6 @@ func isBuiltInCommand(command string) bool {
 	return slices.Contains(builtInCommand, command)
 }
 
-// func isExternalCommand(command string )(commandPath string, isExternal bool) {
-// 	path, err := exec.LookPath(command)
-// 	isExternal = false
-
-// 	if err != nil {
-// 		isExternal = true
-// 	}
-
-// 	return path, isExternal
-// }
-
 func handleCommandType(commandTypeArguments []string) {
 	if len(commandTypeArguments) == 0 {
 		fmt.Println("type command missing arguments")
@@ -58,7 +47,6 @@ func handleCommandType(commandTypeArguments []string) {
 			fmt.Printf("%v is %v", command, path)
 		}
 	}
-
 	fmt.Print("\n")
 }
 
