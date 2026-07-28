@@ -89,7 +89,7 @@ func main() {
 			if len(commandArguments) == 0 {
 				homePath, err := os.UserHomeDir()
 
-				if err != nil  {
+				if err != nil {
 					fmt.Fprintln(os.Stderr, "Error changing directory:", error)
 				}
 
@@ -103,6 +103,7 @@ func main() {
 			if err != nil || !path.IsAbs(dirToGo) {
 				fmt.Fprintf(os.Stderr, "cd: %v: No such file or directory", dirToGo)
 				fmt.Println()
+
 			} else {
 				os.Chdir(dirToGo)
 			}
