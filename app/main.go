@@ -55,7 +55,6 @@ func handleCommandType(commandTypeArguments []string) {
 
 func main() {
 	reader := bufio.NewReader(os.Stdin)
-	pwd, _:= os.Getwd();
 
 	for {
 		fmt.Print("$ ")
@@ -78,7 +77,7 @@ func main() {
 		case "type":
 			handleCommandType(commandArguments)
 		case "pwd":
-			fmt.Println(pwd)
+			fmt.Println(os.Getwd())
 		case "cd":
 			// no argument => to home
 			if len(commandArguments) == 0{
@@ -87,13 +86,13 @@ func main() {
 
 			dirToGo := commandArguments[0];
 			
-			_, err := os.ReadDir(dirToGo)
+			_, err := os.Stat(dirToGo)
 
 			if err != nil || !path.IsAbs(dirToGo) {
 				fmt.Fprintf(os.Stderr, "cd: %v: No such file or directory", dirToGo)
 				fmt.Println()
 			} else {
-				pwd = dirToGo 
+				os.Chdir(dirToGo)
 			}
 
 		default:
