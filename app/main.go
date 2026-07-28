@@ -77,7 +77,13 @@ func main() {
 		case "type":
 			handleCommandType(commandArguments)
 		case "pwd":
-			fmt.Println(os.Getwd())
+			pwd, err := os.Getwd()
+
+			if err != nil {
+				fmt.Fprintln(os.Stderr, "Error printing current directory:", error)
+			}
+
+			fmt.Println(pwd)
 		case "cd":
 			// no argument => to home
 			if len(commandArguments) == 0{
