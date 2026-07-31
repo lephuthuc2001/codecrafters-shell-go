@@ -3,3 +3,6 @@ format-code:
 
 submit-code:
 	codecrafters submit
+
+run:
+	go run ./app/main.go 
