@@ -29,10 +29,10 @@ func splitCommandInput(input string) (command string, commandArguments []string)
 	containsDoubleQuote := slices.Contains([]rune(input), doubleQuote)
 
 	splitFunc := func(c rune) bool {
-		if containsDoubleQuote {
-			return c == doubleQuote
+		if c == doubleQuote {
+			return true
 		}
-		
+
 		if containsSingleQuote {
 			return c == singleQuote
 		}
