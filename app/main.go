@@ -33,8 +33,8 @@ func splitCommandInput(input string) (command string, commandArguments []string)
 			return true
 		}
 
-		if containsSingleQuote {
-			return c == singleQuote
+		if c == singleQuote {
+			return true
 		}
 
 		return unicode.IsSpace(c)
