@@ -22,7 +22,17 @@ func splitCommandInput(input string) (command string, commandArguments []string)
 	argsToken := strings.TrimSpace(input[len(command):])
 
 	splitFunc := func(c rune) bool {
-		return !unicode.IsLetter(c) && !unicode.IsNumber(c) && !unicode.IsSpace(c)
+		apostrophe := '\u0027'
+
+		runesInput := []rune(input);
+
+		containQuote := slices.Contains(runesInput, apostrophe)
+
+		if containQuote {
+			return c == apostrophe
+		}
+		
+		return unicode.IsSpace(c)
 	}
 
 	commandArguments = strings.FieldsFunc(argsToken,splitFunc)
