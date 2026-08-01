@@ -21,13 +21,19 @@ func splitCommandInput(input string) (command string, commandArguments []string)
 
 	argsToken := strings.TrimSpace(input[len(command):])
 
-	apostrophe := '\u0027'
+	singleQuote := '\u0027'
+	doubleQuote := '\u0022'
 
-	containQuote := slices.Contains([]rune(input), apostrophe)
+
+	containSingleQuote := slices.Contains([]rune(input), singleQuote) 
 
 	splitFunc := func(c rune) bool {
-		if containQuote {
-			return c == apostrophe
+		if c == doubleQuote {
+			return true
+		}
+
+		if c == singleQuote {
+			return true
 		}
 
 		return unicode.IsSpace(c)
@@ -35,7 +41,7 @@ func splitCommandInput(input string) (command string, commandArguments []string)
 
 	commandArguments = strings.FieldsFunc(argsToken, splitFunc)
 
-	if containQuote {
+	if containSingleQuote {
 		for i, val := range commandArguments {
 			if len(strings.TrimSpace(val)) == 0 {
 				commandArguments[i] = " "
