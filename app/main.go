@@ -26,7 +26,7 @@ func splitCommandInput(input string) (command string, commandArguments []string)
 
 
 	containsSingleQuote := slices.Contains([]rune(input), singleQuote)
-	containsDoubleQuote := slices.Contains([]rune(input), doubleQuote)
+	// containsDoubleQuote := slices.Contains([]rune(input), doubleQuote)
 
 	splitFunc := func(c rune) bool {
 		if c == doubleQuote {
