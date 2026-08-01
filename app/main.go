@@ -25,11 +25,11 @@ func splitCommandInput(input string) (command string, commandArguments []string)
 	// doubleQuote := '\u0022'
 
 
-	containSingleQuote := slices.Contains([]rune(input), singleQuote) 
+	containQuote := slices.Contains([]rune(input), singleQuote)
 
 	splitFunc := func(c rune) bool {
-		if containSingleQuote {
-			return true
+		if containQuote {
+			return c == singleQuote
 		}
 
 		return unicode.IsSpace(c)
@@ -37,7 +37,7 @@ func splitCommandInput(input string) (command string, commandArguments []string)
 
 	commandArguments = strings.FieldsFunc(argsToken, splitFunc)
 
-	if containSingleQuote {
+	if containQuote {
 		for i, val := range commandArguments {
 			if len(strings.TrimSpace(val)) == 0 {
 				commandArguments[i] = " "
