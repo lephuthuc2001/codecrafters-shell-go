@@ -17,29 +17,32 @@ func splitCommandInput(input string) (command string, commandArguments []string)
 	}
 
 	inputFields := strings.Fields(input)
-	command = inputFields[0];
+	command = inputFields[0]
 
 	argsToken := strings.TrimSpace(input[len(command):])
 
+	apostrophe := '\u0027'
+
+	runesInput := []rune(input)
+
+	containQuote := slices.Contains(runesInput, apostrophe)
+
 	splitFunc := func(c rune) bool {
-		apostrophe := '\u0027'
-
-		runesInput := []rune(input);
-
-		containQuote := slices.Contains(runesInput, apostrophe)
 
 		if containQuote {
 			return c == apostrophe
 		}
-		
+
 		return unicode.IsSpace(c)
 	}
 
-	commandArguments = strings.FieldsFunc(argsToken,splitFunc)
+	commandArguments = strings.FieldsFunc(argsToken, splitFunc)
 
-	commandArguments = slices.DeleteFunc(commandArguments, func(s string) bool {
-		return len(s) ==0
-	})
+	for i,val := range commandArguments {
+		if len(strings.TrimSpace(val)) == 0 {
+			commandArguments[i] = " "
+		}
+	}
 
 	return command, commandArguments
 }
@@ -92,8 +95,8 @@ func main() {
 		}
 
 		command, commandArguments := splitCommandInput(str)
- 
-		if len(command) ==0 {
+
+		if len(command) == 0 {
 			continue
 		}
 
@@ -102,7 +105,7 @@ func main() {
 		case "exit":
 			os.Exit(0)
 		case "echo":
-			fmt.Println(strings.Join(commandArguments,""))
+			fmt.Println(strings.Join(commandArguments, ""))
 		case "type":
 			handleCommandType(commandArguments)
 		case "pwd":
@@ -157,7 +160,7 @@ func main() {
 				continue
 			}
 
-			out, err := exec.Command(command,commandArguments...).Output()
+			out, err := exec.Command(command, commandArguments...).Output()
 			fmt.Print(string(out))
 		}
 	}

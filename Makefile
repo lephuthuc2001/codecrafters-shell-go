@@ -1,4 +1,4 @@
-format-code:
+format:
 	go fmt ./app/main.go
 
 submit-code:
