@@ -22,7 +22,7 @@ func splitCommandInput(input string) (command string, commandArguments []string)
 	argsToken := strings.TrimSpace(input[len(command):])
 
 	singleQuote := '\u0027'
-	doubleQuote := '\u0022'
+	// doubleQuote := '\u0022'
 
 
 	containSingleQuote := slices.Contains([]rune(input), singleQuote) 
