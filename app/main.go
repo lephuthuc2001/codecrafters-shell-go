@@ -26,15 +26,15 @@ func splitCommandInput(input string) (command string, commandArguments []string)
 
 
 	containsSingleQuote := slices.Contains([]rune(input), singleQuote)
-	// containsDoubleQuote := slices.Contains([]rune(input), doubleQuote)
+	containsDoubleQuote := slices.Contains([]rune(input), doubleQuote)
 
 	splitFunc := func(c rune) bool {
-		if c == doubleQuote {
-			return true
+		if containsDoubleQuote {
+			return c == doubleQuote
 		}
 
-		if c == singleQuote {
-			return true
+		if containsSingleQuote {
+			return c == singleQuote
 		}
 
 		return unicode.IsSpace(c)
