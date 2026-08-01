@@ -20,6 +20,13 @@ func splitCommandInput(input string) (command string, commandArguments string) {
 
 	commandArguments = strings.TrimSpace(input[len(command):])
 
+	if strings.Contains(commandArguments,"'"){
+		commandArguments = strings.ReplaceAll(commandArguments,"'","")
+	} else {
+		commandArguments = strings.Join(strings.Fields(commandArguments)," ")
+	}
+
+
 	return command, commandArguments
 }
 
@@ -81,13 +88,7 @@ func main() {
 		case "exit":
 			os.Exit(0)
 		case "echo":
-			if strings.Contains(commandArguments,"'"){
-				fmt.Println(strings.ReplaceAll(commandArguments,"'",""))
-			} else {
-				output := strings.Join(strings.Fields(commandArguments)," ")
-				fmt.Println(output)
-			}
-
+			fmt.Println(commandArguments)
 		case "type":
 			handleCommandType(commandArguments)
 		case "pwd":
