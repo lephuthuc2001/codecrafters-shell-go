@@ -9,13 +9,18 @@ import (
 	"strings"
 )
 
-func splitCommandInput(input string) (command string, commandArguments []string) {
-	input = strings.Trim(input, "\n")
-	input = strings.TrimSpace(input)
+func splitCommandInput(input string) (command string, commandArguments string) {
+	input = strings.TrimRight(input, "\n")
+	if len(input) == 0 {
+		return
+	}
 
 	inputFields := strings.Fields(input)
+	command = inputFields[0];
 
-	return inputFields[0], inputFields[1:]
+	commandArguments = strings.TrimSpace(input[len(command):])
+
+	return command, commandArguments
 }
 
 func isBuiltInCommand(command string) bool {
@@ -30,13 +35,13 @@ func isBuiltInCommand(command string) bool {
 	return slices.Contains(builtInCommand, command)
 }
 
-func handleCommandType(commandTypeArguments []string) {
+func handleCommandType(commandTypeArguments string) {
 	if len(commandTypeArguments) == 0 {
 		fmt.Println("type command missing arguments")
 		return
 	}
 
-	command := commandTypeArguments[0]
+	command := strings.Fields(commandTypeArguments)[0]
 
 	if isBuiltInCommand(command) {
 		fmt.Printf("%v is a shell builtin", command)
@@ -66,13 +71,23 @@ func main() {
 		}
 
 		command, commandArguments := splitCommandInput(str)
+ 
+		if len(command) ==0 {
+			continue
+		}
 
 		switch command {
 
 		case "exit":
 			os.Exit(0)
 		case "echo":
-			fmt.Println(strings.Join(commandArguments, " "))
+			if strings.Contains(commandArguments,"'"){
+				fmt.Println(strings.ReplaceAll(commandArguments,"'",""))
+			} else {
+				output := strings.Join(strings.Fields(commandArguments)," ")
+				fmt.Println(output)
+			}
+
 		case "type":
 			handleCommandType(commandArguments)
 		case "pwd":
@@ -84,7 +99,6 @@ func main() {
 
 			fmt.Println(pwd)
 		case "cd":
-			// no argument => to home
 			if len(commandArguments) == 0 {
 				homePath, err := os.UserHomeDir()
 
@@ -96,7 +110,7 @@ func main() {
 				continue
 			}
 
-			dirToGo := commandArguments[0]
+			dirToGo := strings.Fields(commandArguments)[0]
 
 			if dirToGo == "~" {
 				homePath, err := os.UserHomeDir()
@@ -128,7 +142,7 @@ func main() {
 				continue
 			}
 
-			out, err := exec.Command(command, commandArguments...).Output()
+			out, err := exec.Command(command, strings.Fields(commandArguments)...).Output()
 			fmt.Print(string(out))
 		}
 	}
