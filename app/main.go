@@ -52,7 +52,7 @@ func splitCommandInput(input string) (command string, commandArguments []string)
 		argsLength := len(commandArguments)
 		for i, val := range commandArguments {
 			if i + 1 <= argsLength - 1 {
-				commandArguments[i] = val + " "
+				commandArguments[i] = strings.TrimSpace(val) + " "
 			}
 		}
 	}
