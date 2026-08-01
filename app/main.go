@@ -28,7 +28,6 @@ func splitCommandInput(input string) (command string, commandArguments []string)
 	containQuote := slices.Contains(runesInput, apostrophe)
 
 	splitFunc := func(c rune) bool {
-
 		if containQuote {
 			return c == apostrophe
 		}
@@ -38,9 +37,18 @@ func splitCommandInput(input string) (command string, commandArguments []string)
 
 	commandArguments = strings.FieldsFunc(argsToken, splitFunc)
 
-	for i,val := range commandArguments {
-		if len(strings.TrimSpace(val)) == 0 {
-			commandArguments[i] = " "
+	if containQuote {
+		for i, val := range commandArguments {
+			if len(strings.TrimSpace(val)) == 0 {
+				commandArguments[i] = " "
+			}
+		}
+	} else {
+		argsLength := len(commandArguments)
+		for i, val := range commandArguments {
+			if i + 1 <= argsLength - 1 {
+				commandArguments[i] = val + " "
+			}
 		}
 	}
 
