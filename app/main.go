@@ -23,9 +23,7 @@ func splitCommandInput(input string) (command string, commandArguments []string)
 
 	apostrophe := '\u0027'
 
-	runesInput := []rune(input)
-
-	containQuote := slices.Contains(runesInput, apostrophe)
+	containQuote := slices.Contains([]rune(input), apostrophe)
 
 	splitFunc := func(c rune) bool {
 		if containQuote {
